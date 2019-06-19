@@ -21,6 +21,8 @@ class Category(models.Model):
         verbose_name = '分类'
         verbose_name_plural = '分类'
 
+    def __str__(self):
+        return '%s' %(self.name)
 
 class Tag(models.Model):
     STATUS_NORMAL = 1
@@ -32,11 +34,14 @@ class Tag(models.Model):
 
     name = models.CharField(max_length=10,verbose_name='名称')
     status = models.PositiveIntegerField(default=STATUS_NORMAL,choices=STATUS_ITEMS,verbose_name='状态')
-    owner = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
+    owner = models.ForeignKey(User,verbose_name='作者')
+    create_time = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
 
     class Meta:
         verbose_name_plural = verbose_name = '标签'
 
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     STATUS_NORMAL = 1
