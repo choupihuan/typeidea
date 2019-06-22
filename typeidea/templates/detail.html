@@ -1,10 +1,6 @@
-{% if post %}
-    <p>asdasda</p>
-    <div>
-        <p>{{ post.title }}</p>
-        <p>{{ post.desc }}</p>
-        <p>{{ post.content }}</p>
-        <p>{{ post.create_time }}</p>
-        <p>{{ tag.name }}</p>
-    </div>
+{% if post_list %}
+    <p>{{ post_list.title }}</p>
+    <code>{{ post_list.content }}</code>
 {% endif %}
+
+

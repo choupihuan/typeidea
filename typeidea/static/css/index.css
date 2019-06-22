@@ -1,11 +1,17 @@
 .banner {
-    width: 670px;
+    width: 870px;
     height: 280px;
     overflow: hidden;
 }
+body{
+    background: #4C4A43;
+}
+a,p,span h1,h2,h3,h4,h5{
+    color: #CACACA;
+}
 
 #slide-runner {
-    width: 670px;
+    width: 870px;
     height: 280px;
     overflow: hidden;
     position: absolute;
@@ -13,12 +19,13 @@
 
 #slide-holder img {
     position: absolute;
+    width: 870px;
 }
 
 #slide-controls {
     left: 0;
     bottom: 0;
-    width: 670px;
+    width: 870px;
     height: 34px;
     display: none;
     position: absolute;
@@ -82,7 +89,9 @@
     display: inline-block;
     padding: 0 5px;
 }
-
+.logo img{
+    width: 55px;
+}
 .blogs {
     padding: 30px 0;
     position: relative;
@@ -108,7 +117,7 @@
 .blogs ul {
     float: right;
     line-height: 22px;
-    width: 72%;
+    width: 100%;
     color: #756F71;
 }
 
@@ -120,11 +129,11 @@
 }
 
 .blogs h3 a {
-    color: #474645;
+    color: #CBC9AD;
 }
 
 .blogs h3 a:hover {
-    color: #066;
+    color: white;
     text-decoration: underline
 }
 

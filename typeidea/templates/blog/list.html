@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>我的博客</title>
+ <meta name="关键字" content="">
+ <link href="/static/css/buju.css" rel="stylesheet">
+ <link href="/static/css/index.css" rel="stylesheet">
+ <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+ <script type="text/javascript" src="/static/js/sliders.js"></script>
+</head>
+<body>
+<div>顶部分类
+    {% for cate in navs %}
+        <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
+    {% endfor %}
+
+</div>
+
+<br>
+{% if tag %}
+    标签页：{{ tag.name }}
+{% endif %}
+
+{% if category %}
+    分类页：{{ category.name }}
+{% endif %}
+
+<ul>
+    {% for post in post_list %}
+        <li>
+            <a href="/post/{{ post.id }}.html">{{ post.title }}</a>
+            <div>
+                <span>作者：{{ post.owner.username }}</span>
+                <span>分类：{{ post.category.name }}</span>
+            </div>
+            <p>{{ post.id }}</p>
+        </li>
+    {% endfor %}
+
+</ul>
+<div>底部分类
+    {% for cate in categories %}
+        <a href="">{{ cate.name }}</a>
+    {% endfor %}
+
+</div>
+<h1>{{ context.content }}</h1>
+</body>
+</html>
