@@ -21,13 +21,17 @@ def post_list(request, category_id=None, tag_id=None):
 
 
 def post_detail(request,post_id=None):
-    post_list = Post.latest_posta()
-
-
-    return render(request,'detail.html',locals())
+    if post_id:
+        post = Post.get_by_post(post_id)
+        post.pv +=1
+        post.save()
+        return render(request,'detail.html',locals())
 
 
 def index(request):
-    post_list = Post.latest_posta()
+    post_list = Post.latest_posta().filter()
     categories = Category.objects.all()
+    tags = Tag.objects.all()
+    hot_posts = Post.hot_posts().all()
+    new_posts = Post.new_posts().all()
     return render(request,'index.html',locals())

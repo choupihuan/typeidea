@@ -79,7 +79,7 @@ class PostAdmin(BaseOwnerAdmin):
         ('基础配置',{
            'description':'基础配置',
             'fields': (
-                ('title','category'),
+                ('title','category','tag'),
                 'status',
             ),
         }),
@@ -89,10 +89,7 @@ class PostAdmin(BaseOwnerAdmin):
                 'content',
             ),
         }),
-        ('额外信息',{
-            'classes': ('collapse',),
-            'fields': ('tag',),
-        })
+
     )
 
 

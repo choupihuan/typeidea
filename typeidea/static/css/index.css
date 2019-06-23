@@ -29,7 +29,6 @@ a,p,span h1,h2,h3,h4,h5{
     height: 34px;
     display: none;
     position: absolute;
-    background: url(../images/silde-nav.png) 0 0;
 }
 
 #slide-controls p.text {
@@ -140,8 +139,7 @@ a,p,span h1,h2,h3,h4,h5{
 .autor {
     overflow: hidden;
     clear: both;
-    margin: 10px 0;
-    display: inline-block;
+    display: block;
     color: #838383;
     width: 100%;
 }

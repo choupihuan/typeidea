@@ -60,6 +60,10 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def latest_posta(cls):
+        return cls.objects.filter(status=cls.STATUS_NORMAL)
+
 class Post(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
@@ -78,12 +82,12 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag,verbose_name='标签')
     owner = models.ForeignKey(User,verbose_name='作者')
     create_time = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
-    pv = models.PositiveIntegerField(default=1)
-    uv = models.PositiveIntegerField(default=1)
+    pv = models.PositiveIntegerField(default=1,verbose_name='浏览数')
+    uv = models.PositiveIntegerField(default=1,verbose_name='评论数')
 
     class Meta:
         verbose_name = verbose_name_plural = '文章'
-        ordering = ['-id','-pv']  #根据id进行降序排列,根据访问量进行降序排列
+        ordering = ['-id','-pv','-create_time']  #根据id进行降序排列,根据访问量进行降序排列
 
 
     @staticmethod
@@ -112,6 +116,12 @@ class Post(models.Model):
         return post_list,category
 
 
+    @staticmethod
+    def get_by_post(post_id):
+        post = Post.objects.filter(id=post_id).select_related('owner','category').first()
+        return post
+
+
     @classmethod
     def latest_posta(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL)
@@ -120,3 +130,8 @@ class Post(models.Model):
     @classmethod
     def hot_posts(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv').only('title','id')
+
+
+    @classmethod
+    def new_posts(cls):
+        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-create_time').only('title','id')

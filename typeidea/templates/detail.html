@@ -1,6 +1,10 @@
-{% if post_list %}
-    <p>{{ post_list.title }}</p>
-    <code>{{ post_list.content }}</code>
+{% if post %}
+    <p>{{ post.owner.username }}</p>
+    <p>{{ post.category.name }}</p>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.desc }}</p>
+    <text>{{ post.content }}</text>
+    <p>{{ post.create_time }}</p>
 {% endif %}
 
 
