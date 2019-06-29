@@ -1,2 +1,4 @@
 django=1.11
 -e .
+mistune
+django-ckeditor=5
