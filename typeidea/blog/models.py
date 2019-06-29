@@ -1,3 +1,5 @@
+import mistune
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -64,6 +66,7 @@ class Tag(models.Model):
     def latest_posta(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL)
 
+
 class Post(models.Model):
     STATUS_NORMAL = 1
     STATUS_DELETE = 0
@@ -84,6 +87,9 @@ class Post(models.Model):
     create_time = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
     pv = models.PositiveIntegerField(default=1,verbose_name='浏览数')
     uv = models.PositiveIntegerField(default=1,verbose_name='评论数')
+    image = models.ImageField(max_length=256,verbose_name='图片路径',default=None)
+    content_html = models.TextField(verbose_name='正文html代码',blank=True,editable=False)
+    is_md = models.BooleanField(default=False,verbose_name='markdown语法')
 
     class Meta:
         verbose_name = verbose_name_plural = '文章'
@@ -135,3 +141,11 @@ class Post(models.Model):
     @classmethod
     def new_posts(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-create_time').only('title','id')
+
+
+    def save(self,*args,**kwargs):
+        if self.is_md:
+            self.content_html = mistune.markdown(self.content)
+        else:
+            self.content_html = self.content
+        super().save(*args,**kwargs)

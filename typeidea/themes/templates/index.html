@@ -1,0 +1,149 @@
+{% extends "./base.html" %}
+
+{% block header %}
+    <header>
+    <div class="logo f_l">
+	   <a href="#">
+	      <img src="/static/images/logo1.png">
+	   </a>
+	    </div>
+    <form action="/search" class="form-inline"  method="GET">
+        <input type="search" class="form-control" aria-label="Search"name="keyword">
+        <button class="btn btn-outline-success" type="submit">搜索</button>
+    </form>
+      <div id="topnav" class="f_r">
+	     <ul>
+		     <i class="fa fa-home fa-2x" style="color: red"></i><a href="#" target="_blank" id="topnav_current">首页</a>
+			 <i class="fa fa-edit fa-2x" style="color: red;"></i> <a href="{% url 'publish' %}" target="_blank">写博客</a>
+			 <i class="fa fa-commenting fa-2x" style="color: cornflowerblue"></i> <a href="" target="_blank">信息</a>
+			  <a href="#" target="_blank">登录</a>
+			  <a href="#" target="_blank">注册</a>
+		  </ul>
+	 </div>
+  </header>
+{% endblock %}
+
+{% block nav %}
+    <nav id="nav" class="clearfix">
+        <div class="nav_com">
+            <ul>
+                <li style="background: red"><a href="{% url 'index' %}">推荐</a></li>
+                {% for cate in categorys.navs %}
+                    <li class="l_click" ><a href="{% url 'category_list' cate.id %}">{{ cate.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+      <script>
+          $(function () {
+              var getDiv_md = $('#nav');
+              var offSet = getDiv_md.offset().top;
+              $(window).scroll(function () {
+              if($(window).scrollTop()>offSet){
+                  $('#nav').css({'position':'fixed','top':0});
+                  $('.f_l').css('margin-left','106px');
+                  $('.f_mov').css('margin-left',0);
+                  $('.dtime').css('margin-left',0);
+              }
+              else {
+                  $('#nav').css({'position':'relative'});
+                  $('.f_l').css('margin-left',0);
+                  $('.f_mov').css('margin-left',0);
+
+              }
+
+              });
+
+          });
+      </script>
+
+{% endblock %}
+{% block middle %}
+        <div class="l_box f_l">
+	  <div class="banner">
+	    <div id="slide-holder">
+		   <div id="slide-runner">
+		     <a href="/" target="_blank">
+			     <img id="slide-img-1" src="/static/images/a1.jpg" alt style>
+			  </a>
+			  <a href="/" target="_blank">
+			     <img id="slide-img-2" src="/static/images/a2.jpg" alt style>
+			  </a>
+			  <a href="/" target="_blank">
+			     <img id="slide-img-3" src="/static/images/a3.jpg" alt style>
+			  </a>
+			  <a href="/" target="_blank">
+			     <img id="slide-img-4" src="/static/images/a4.jpg" alt style>
+			  </a>
+			  <div id="slide-controls" >
+              <p id="slide-desc" class="text"></p>
+              <p id="slide-nav"></p>
+			  </div>
+		   </div>
+		 </div>
+	  </div>
+	  <script>
+	     if(!window.slider){
+		     var slider={};
+		 }
+		 slider.data=[
+		 {
+		     "id":"slide-img-1", //与slide-runner中的img标签id对应
+			 "client":"",
+			 "desc":""     //这里描述图片内容
+		 },
+		 {
+		     "id":"slide-img-2",
+			 "client":"",
+			 "desc":""
+		 },
+		 {
+		     "id":"slide-img-3",
+			 "client":"",
+			 "desc":""
+		 },
+		 {
+		     "id":"slide-img-4",
+			 "client":"",
+			 "desc":""
+		 }
+		 ];
+	   </script>
+	   <div class="topnews">
+	   <h2>
+	    文章推荐
+	   </h2>
+           {% for post in post_list %}
+                <div class="blogs">
+                    <ul>
+                        <h3><a href="{% url 'post_detail' post.id%}">{{ post.title }}</a></h3>
+                        <p>{{ post.desc }}</p>
+                        <p class="autor">
+                            <span class="lm f_l f_mov">
+                                <a href="{% url 'author' post.owner.id %}">{{ post.owner.username }}</a>
+                            </span>
+                            <span class="dtime f_l">{{ post.create_time }}</span>
+                            <span class="viewnum f_r">
+                                浏览(<a href="">{{ post.pv }}</a>)
+                            </span>
+                            <span class="pingl f_r">
+                                评论(<a href="">{{ post.uv }}</a>)
+                            </span>
+                        </p>
+                    </ul>
+                </div>
+           {% endfor %}
+            {% if page_obj %}
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+                {% endif %}
+            {% endif %}
+	   </div>
+	 </div>
+
+{% endblock %}
+
+

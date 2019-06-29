@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评论结果页</title>
+    <style>
+        body{TEXT-ALIGN:center}
+    </style>
+</head>
+<body>
+    <div class="result">
+    {{ form.non_field_errors }}
+        {% if succeed %}
+            评论成功
+            <a href="{{ target }}">返回</a>
+        {% else %}
+            <ul class="errorlist">
+                {% for field,message in form.errors.item %}
+                    <li>{{ message }}sdsds</li>
+                {% endfor %}
+                <p>{{ form.content.errors }}  OK</p>
+            </ul>
+            <a href="javascript:window.history.back();">返回--失败</a>
+        {% endif %}
+
+    </div>
+</body>
+</html>

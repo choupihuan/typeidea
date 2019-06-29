@@ -1,0 +1,24 @@
+{% extends './base.html' %}
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/googlecode.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+{% load comment_block %}
+{% block middle %}
+    <div class="detail_left">
+        {% if post %}
+            <div class="post_title"><h1>{{ post.title }}</h1></div>
+            <div class="post_desc"><p>{{ post.desc }}</p></div>
+            <div class="post_content">
+                <p>
+
+                    {{ post.content_html |safe }}
+
+                </p></div>
+        {% endif %}
+        {% comment_block request.path %}
+    </div>
+
+
+{% endblock %}

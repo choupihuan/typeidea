@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>typeidea博客系统</title>
+    <meta name="关键字" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.4.4/css/bootstrap.css">
+    <link href="/static/css/buju.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sliders.js"></script>
+    {% block script %}
+    
+    {% endblock %}
+    <style>
+        .post{
+            margin-bottom: 5px;
+        }
+    </style>
+    {% block extra_head %}
+
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+{% endblock %}
+<article>
+    {% block nav %}
+    {% endblock %}
+    {% block middle %}
+    {% endblock %}
+    <div class="r_first">
+
+    <div class="r_box f_r">
+	   <div class="tab" id="lp_right_select">
+	     <script>
+		     window.onload=function()
+			 {
+			     var oLi=document.getElementById("tb").getElementsByTagName("li");
+				 var oUl=document.getElementById("tb-main").getElementsByTagName("div");
+				 for(var i=0;i<oLi.length;i++)
+				 {
+				     oLi[i].index=i;
+					 oLi[i].onmouseover=function()
+					 {
+					    for(var n=0;n<oLi.length;n++)
+						    oLi[n].className="";
+							this.className="cur";
+						for(var n=0;n<oUl.length;n++)
+                            oUl[n].style.display="none";
+                            oUl[this.index].style.display="block";
+					 }
+				 }
+			 }
+		  </script>
+	     <div class="tab-top">
+		      <ul class="hd" id="tb">
+			       <li class="cur"><a href="/">点击排行</a></li>
+				   <li><a href="/">最新文章</a></li>
+				   <li><a href="/">站长推荐</a></li>
+			  </ul>
+		  </div>
+		  <div class="tab-main" id="tb-main">
+		      <div class="bd bd-news" style="display:block;">
+                  <ul>
+                      {% for hot in hot_posts %}
+                          <li><a href="{% url 'post_detail' hot.id %}" target="_blank">{{ hot.title }}</a></li>
+                      {% endfor %}
+                  </ul>
+              </div>
+			   <div class="bd bd-news" ><ul>
+			      {% for new in new_posts %}
+                          <li><a href="{% url 'post_detail' new.id %}" target="_blank">{{ new.title }}</a></li>
+                      {% endfor %}
+			  </ul></div>
+			   <div class="bd bd-news" >
+               <ul>
+                    {% for foo in refer %}
+                        <li><a href="{% url 'post_detail' foo.id %}" target="_blank">{{ foo.title }}</a></li>
+                    {% endfor %}
+			    </ul></div>
+		  </div>
+	   </div>
+	   <div class="cloud">
+	     <h3>标签云</h3>
+		  <ul>
+              {% for tag in tags %}
+                <li><a href="{% url 'tag_list' tag.id %}">{{ tag.name }}</a></li>
+              {% endfor %}
+		  </ul>
+	   </div>
+	   <div class="tuwen">
+	     <h3>今日推荐</h3>
+		 <ul>
+             {% for refer in refer_post %}
+                <li>
+                    <a href="/"><img src=""><b>{{ refer.title }}</b></a>
+		        </li>
+             {% endfor %}
+		 </ul>
+	   </div>
+	   <div class="links">
+	     <h3><span><a href="/">申请友情链接</a></span>友情链接</h3>
+		 <ul>
+             {% for link in links %}
+                 <li><a href="{{ link.href }}">{{ link.title }}</a></li>
+             {% endfor %}
+
+		 </ul>
+	   </div>
+	 </div>
+    </div>
+       <script>
+          $(function () {
+              var getDiv_md = $('.cloud');
+              var offSet = getDiv_md.offset().top;
+              $(window).scroll(function () {
+              if($(window).scrollTop()>offSet){
+                  $('.r_box').css({'position':'fixed','bottom':0,'right':'300px'});
+              }
+              else {
+                  $('.r_box').css({'position':'relative','right':0});
+              }
+
+              });
+
+          });
+      </script>
+</article>
+
+</body>
+</html>

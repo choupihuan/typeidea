@@ -1,0 +1,36 @@
+<div class="comment">
+    <form action="/comment/" method="POST">
+        <input type="hidden" name="target"value="{{ target }}">
+        {% csrf_token %}
+        <label for="content"></label>
+        <div>
+            {{ comment_form.media }}
+            {{ comment_form.content }}
+            <button>发送</button>
+        </div>
+
+    </form>
+        <hr>
+    <ul class="list-group">
+    <h4>共有{{ comment.count }}条评论</h4>
+        {% for comment in comment_list %}
+            <li class="list-group-item">
+                {{ comment.media }}
+                <div class="nickname">
+                    <span>{{ comment.create_time }}</span>
+                </div>
+                <div class="comment-content">
+
+                    {{ comment.content|safe}}
+
+                </div>
+            </li>
+        {% endfor %}
+
+    </ul>
+</div>
+{% block script %}
+    <script>
+    $('.django-ckeditor-widget').removeAttr('style');
+    </script>
+{% endblock %}
